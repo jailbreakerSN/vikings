@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+<html lang="fr">
+<head>
+    {% block head %}
+    {% block meta %}
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{{ title }} | Vikings - Portail d'analyse et d'exploration de données </title>
+    <meta name="description" content="Vikings est un portail d'analyse et d'exploration de données Big Data"/>
+    <meta name="keywords"
+          content="Big Data, plateforme Big Data, exploration de données, data analysis, crm, data visualisation, algorithmisation, web app, algorithme big data"/>
+    <meta name="author" content="Dame NDIAYE"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='dist/img/logo.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='dist/img/logo.png') }}" type="image/x-icon">
+
+    {% endblock meta %}
+
+    {% block stylesheets %}
+    <!-- vector map CSS -->
+    <link href="{{ url_for('static', filename='vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}"
+          rel="stylesheet"
+          type="text/css"/>
+    <!-- Custom CSS -->
+    <!--<link href="dist/css/style.css" rel="stylesheet" type="text/css">-->
+    <link href="{{ url_for('static', filename='dist/css/style.css') }}" rel="stylesheet" type="text/css">
+
+    {% endblock stylesheets %}
+    {% endblock head %}
+</head>
+<body>
+{% block body %}
+
+
+{% endblock body %}
+
+{% block javascripts %}
+
+<!-- JavaScript -->
+
+<!-- jQuery -->
+
+<script src="{{ url_for('static', filename='vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ url_for('static', filename='vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
+
+<!-- Slimscroll JavaScript -->
+<script src="{{ url_for('static', filename='dist/js/jquery.slimscroll.js') }}"></script>
+
+<!-- Init JavaScript -->
+<script src="{{ url_for('static', filename='dist/js/init.js') }}"></script>
+
+{% endblock javascripts %}
+</body>
+</html>
