@@ -1,0 +1,114 @@
+{% extends "base_site.html" %}
+
+{% block active3 %} {% endblock active3 %}
+
+{% block content %}
+
+<!-- Main Content -->
+<div class="container-fluid">
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Administrez Vos Projets</h5>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="panel panel-{{ cardclass }} contact-card card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <div class="pull-left user-img-wrap mr-15">
+                            <i class=" card-user-img fa fa-tasks fa-5x" style="color:#F15D22"></i>
+                        </div>
+                        <div class="pull-left user-detail-wrap">
+											<span class="block card-user-name">
+												Nom du Projet
+											</span>
+                            <span class="block card-user-desn">
+												designer
+											</span>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <a class="pull-left inline-block mr-15" href="#">
+                            <i class="zmdi zmdi-edit txt-light"></i>
+                        </a>
+                        <a class="pull-left inline-block mr-15" href="#">
+                            <i class="zmdi zmdi-delete txt-light"></i>
+                        </a>
+                        <div class="pull-left inline-block dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
+                               role="button"><i class="zmdi zmdi-more-vert txt-light"></i></a>
+                            <ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
+                                <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i
+                                        class="icon wb-reply" aria-hidden="true"></i>Full Info</a></li>
+                                <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i
+                                        class="icon wb-share" aria-hidden="true"></i>Send Message</a></li>
+                                <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i
+                                        class="icon wb-trash" aria-hidden="true"></i>Follow</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body row">
+                        <div class="user-others-details pl-15 pr-15">
+                            <div class="mb-15">
+                                <i class="zmdi zmdi-email-open inline-block mr-10"></i>
+                                <span class="inline-block txt-dark">markh@gmail.com</span>
+                            </div>
+                            <div class="mb-15">
+                                <i class="zmdi zmdi-smartphone inline-block mr-10"></i>
+                                <span class="inline-block txt-dark">9192372533</span>
+                            </div>
+                            <div class="mb-15">
+                                <i class="zmdi zmdi-phone inline-block mr-10"></i>
+                                <span class="inline-block txt-dark">0203878654</span>
+                            </div>
+                            <div>
+                                <i class="zmdi zmdi zmdi-skype inline-block mr-10"></i>
+                                <span class="inline-block txt-dark">jberincker</span>
+                            </div>
+                        </div>
+                        <hr class="light-grey-hr mt-20 mb-20"/>
+                        <div class="emp-detail pl-15 pr-15">
+                            <div class="mb-5">
+                                <span class="inline-block capitalize-font mr-5">Créé le </span>
+                                <span class="txt-dark">12-10-2014</span>
+                            </div>
+                            <div>
+                                <span class="inline-block capitalize-font mr-5">Progession</span>
+                                <div class="progress progress-lg">
+                                    <div class="progress-bar progress-bar-{{ cardclass }}" style="width: 75%;"
+                                         role="progressbar">75%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title inline-block txt-dark">Créer un nouveau Projet</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <center><i class="fa fa-plus fa-5x"></i></center>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /Main Content -->
+
+{% endblock content %}
