@@ -43,8 +43,8 @@ def create_app():
     def internal_server_error(e):
         return render_template('errors/500.html'), 500
 
-    @app.errorhandler(Exception)
-    def unhandled_exception(e):
-        return render_template('errors/404.html'), 404
+    # @app.errorhandler(Exception)
+    # def unhandled_exception(e):
+    #     return render_template('errors/404_.html'), 404
 
     return app

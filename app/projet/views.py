@@ -2,7 +2,7 @@ from flask import flash, render_template
 from flask_login import login_required
 
 from app import db
-from app.models import utilisateurs
+from app.models import utilisateur
 from app.projet import projet
 from app.projet.forms import RegistrationForm
 
@@ -16,14 +16,14 @@ def nouveau():
     pageactiveP = "active-page active"
     form = RegistrationForm()
     if form.validate_on_submit():
-        utilisateur = utilisateurs(email=form.email.data,
+        utilisateur1 = utilisateur(email=form.email.data,
                                    username=form.username.data,
                                    firstname=form.firstname.data,
                                    lastname=form.lastname.data,
                                    password=form.password.data)
 
         # add employee to the database
-        db.session.add(utilisateur)
+        db.session.add(utilisateur1)
         db.session.commit()
         flash('You have successfully registered! You may now login.')
 

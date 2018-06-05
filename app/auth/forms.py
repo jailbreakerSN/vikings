@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
-from app.models import utilisateurs
+from app.models import utilisateur
 
 
 class RegistrationForm(FlaskForm):
@@ -22,12 +22,13 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_email(self, field):
-        if utilisateurs.query.filter_by(email=field.data).first():
+        if utilisateur.query.filter_by(email=field.data).first():
             raise ValidationError('Vous avez déjà un compte enregistré avec cet email!!!')
 
     def validate_username(self, field):
-        if utilisateurs.query.filter_by(username=field.data).first():
+        if utilisateur.query.filter_by(username=field.data).first():
             raise ValidationError('Ce nom d\'utilisateur est déjà utilisé!!!')
+
 
 class LoginForm(FlaskForm):
     """
@@ -37,8 +38,9 @@ class LoginForm(FlaskForm):
     password = PasswordField(id("password"), validators=[DataRequired()])
     rememberme = BooleanField(id("rememberme"))
     submit = SubmitField('Login')
+
     def validate_email(self, field):
-        user = utilisateurs.query.filter_by(email=field.data).first()
+        user = utilisateur.query.filter_by(email=field.data).first()
         if not user:
             raise ValidationError('Adresse Email Invalide!!!')
     #
@@ -46,4 +48,3 @@ class LoginForm(FlaskForm):
     #     password = utilisateurs.query.filter_by(email=field.data).first()
     #     if not password:
     #         raise ValidationError("Mot de passe invalide!!!")
-
