@@ -8,10 +8,10 @@
         <li>
             <a href="{{url_for('home.dashboard') }}" class="">
                 <div class="pull-left">
-                    <i class="zmdi zmdi-landscape mr-20"></i>
+                    <i class="zmdi zmdi-home mr-20"></i>
                     <span class="right-nav-text">Accueil</span>
                 </div>
-                <div class="pull-right"><i class="zmdi zmdi-home"></i></div>
+                <!--<div class="pull-right"><i class="zmdi zmdi-home"></i></div>-->
                 <div class="clearfix"></div>
             </a>
         </li>
@@ -34,12 +34,21 @@
 
 
         <li>
-            <a href="{{url_for('projet.nouveau') }}" class="{% block active2 %} {% endblock active2 %}">
+            <a href="javascript:void(0);" class="" data-toggle="collapse" data-target="#documentation_dr">
                 <div class="pull-left">
-                    <i class="zmdi zmdi-storage mr-20"></i>
-                    <span class="right-nav-text">Autre Menu</span></div>
+                    <i class="zmdi zmdi-pin-help mr-20"></i>
+                    <span class="right-nav-text">Documentations</span></div>
                 <div class="clearfix"></div>
             </a>
+
+            <ul id="documentation_dr" class="collapse collapse-level-1">
+                <li>
+                    <a href="{{ url_for('projet.dashboard') }}" class="">Tutoriels</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('projet.nouveau') }}" class="">A Propos de Nous</a>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>

@@ -4,7 +4,7 @@ from flask_login import login_required, login_user, logout_user
 from app import db
 from app.auth import auth
 from app.auth.forms import LoginForm, RegistrationForm
-from app.models import utilisateur
+from app.models import Utilisateur
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -15,14 +15,14 @@ def register():
     """
     form = RegistrationForm()
     if form.validate_on_submit():
-        utilisateur1 = utilisateur(email=form.email.data,
-                                   username=form.username.data,
-                                   firstname=form.firstname.data,
-                                   lastname=form.lastname.data,
-                                   password=form.password.data)
+        utilisateur = Utilisateur(email=form.email.data,
+                                  username=form.username.data,
+                                  firstname=form.firstname.data,
+                                  lastname=form.lastname.data,
+                                  password=form.password.data)
 
         # add employee to the database
-        db.session.add(utilisateur1)
+        db.session.add(utilisateur)
         db.session.commit()
         flash('You have successfully registered! You may now login.')
 
@@ -40,6 +40,7 @@ def register():
 
 
 @auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/', methods=['GET', 'POST'])
 def login():
     """
     Handle requests to the /login route
@@ -50,10 +51,10 @@ def login():
 
         # check whether employee exists in the database and whether
         # the password entered matches the password in the database
-        utilisateur1 = utilisateur.query.filter_by(email=form.email.data).first()
-        if utilisateur1 is not None and utilisateur1.check_password(form.password.data):
+        utilisateur = Utilisateur.query.filter_by(email=form.email.data).first()
+        if utilisateur is not None and utilisateur.check_password(form.password.data):
             # log employee in
-            login_user(utilisateur1, remember=form.rememberme.data)
+            login_user(utilisateur, remember=form.rememberme.data)
 
             # redirect to the dashboard page after login
             # return "Login Success"

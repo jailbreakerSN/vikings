@@ -4,13 +4,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login_manager
 
 
-class utilisateur(UserMixin, db.Model):
+class Utilisateur(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True)
-    email = db.Column(db.String(20), unique=True)
+    email = db.Column(db.String(40), unique=True)
     password = db.Column(db.String(255))
-    firstname = db.Column(db.String(20), unique=False)
-    lastname = db.Column(db.String(20), unique=False)
+    firstname = db.Column(db.String(40), unique=False)
+    lastname = db.Column(db.String(40), unique=False)
 
     # def __init__(self, username, pwd):
     #     self.username = username
@@ -39,7 +39,92 @@ class utilisateur(UserMixin, db.Model):
         return True
 
 
+class Projet(db.Model):
+    __tablename__ = 'projet'
+
+    id_Projet = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(30))
+    description_Projet = db.Column(db.Text)
+    workflow_id_workflow = db.Column(db.ForeignKey('workflow.id_Workflow'), index=True)
+
+    workflow = db.relationship('Workflow', primaryjoin='Projet.workflow_id_workflow == Workflow.id_Workflow')
+    utilisateur = db.relationship('Utilisateur', secondary='est_mene_user')
+
+
+class Workflow(db.Model):
+    __tablename__ = 'workflow'
+
+    id_Workflow = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(30))
+    description = db.Column(db.Text)
+    projet_id_projet = db.Column(db.ForeignKey('projet.id_Projet'), index=True)
+
+    projet = db.relationship('Projet', primaryjoin='Workflow.projet_id_projet == Projet.id_Projet')
+
+
+# class EstMeneUser(db.Model):
+#     __table_name__ = 'est_mene_user'
+#     id_Utilisateur = db.Column(db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False, index=True)
+#     id_Projet = db.Column(db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False, index=True)
+#
+#     projet = db.relationship('Projet')
+#     utilisateur = db.relationship('Utilisateur')
+#
+est_mene_user = db.Table(
+    'est_mene_user', db.metadata,
+    db.Column('id_Projet', db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False),
+    db.Column('id_Utilisateur', db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False,
+              index=True)
+)
+
+
+class EstCreeUser(db.Model):
+    __tablename__ = 'est_cree_user'
+
+    id_Utilisateur = db.Column(db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False, index=True)
+    id_Projet = db.Column(db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False, index=True)
+    date_creation_est_Cree_User = db.Column(db.Date, primary_key=True, nullable=False)
+
+    projet = db.relationship('Projet')
+    utilisateur = db.relationship('Utilisateur')
+
+
+class Etape(db.Model):
+    __tablename__ = 'etape'
+
+    id_Etape = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(30))
+    objectif = db.Column(db.String(255))
+    importance = db.Column(db.Integer)
+    code_Etape = db.Column(db.Text)
+    valide_Etape = db.Column(db.Boolean, default=False)
+    version_Etape = db.Column(db.String(30), default='1.0')
+    id_Langage = db.Column(db.ForeignKey('langage.id_Langage'), index=True)
+    id_Workflow = db.Column(db.ForeignKey('workflow.id_Workflow'), index=True)
+
+    langage = db.relationship('Langage')
+    workflow = db.relationship('Workflow')
+
+
+class Langage(db.Model):
+    __tablename__ = 'langage'
+
+    id_Langage = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(30))
+
+
+class VariableEnv(db.Model):
+    __tablename__ = 'variable_env'
+
+    id_Variable_Env = db.Column(db.Integer, primary_key=True)
+    libelle_Variable_Env = db.Column(db.String(30))
+    valeur_Variable_Env = db.Column(db.String(255))
+    id_Etape = db.Column(db.ForeignKey('etape.id_Etape'), index=True)
+
+    etape = db.relationship('Etape')
+
+
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
-    return utilisateur.query.get(int(user_id))
+    return Utilisateur.query.get(int(user_id))

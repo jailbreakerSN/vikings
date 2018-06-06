@@ -34,6 +34,8 @@ def create_app():
     app.register_blueprint(home_blueprint)
     from app.projet import projet as projet_blueprint
     app.register_blueprint(projet_blueprint)
+    from app.documentation import documentation as documentation_blueprint
+    app.register_blueprint(documentation_blueprint)
 
     @app.errorhandler(404)
     def page_not_found(e):
