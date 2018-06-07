@@ -12,6 +12,12 @@ class Utilisateur(UserMixin, db.Model):
     firstname = db.Column(db.String(40), unique=False)
     lastname = db.Column(db.String(40), unique=False)
 
+    projetAdmin = db.relationship('Projet', secondary='est_cree_user',
+                                  backref=db.backref('projetAdmin', lazy='dynamic'))
+
+    projetMembers = db.relationship('Projet', secondary='est_mene_user',
+                                    backref=db.backref('projetMembers', lazy='dynamic'))
+
     # def __init__(self, username, pwd):
     #     self.username = username
     #     self.password = pwd
@@ -48,7 +54,8 @@ class Projet(db.Model):
     workflow_id_workflow = db.Column(db.ForeignKey('workflow.id_Workflow'), index=True)
 
     workflow = db.relationship('Workflow', primaryjoin='Projet.workflow_id_workflow == Workflow.id_Workflow')
-    utilisateur = db.relationship('Utilisateur', secondary='est_mene_user')
+    utilisateur = db.relationship('Utilisateur', secondary='est_mene_user',
+                                  backref=db.backref('projets', lazy='dynamic'))
 
 
 class Workflow(db.Model):
