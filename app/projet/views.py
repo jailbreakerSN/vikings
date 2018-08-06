@@ -1,28 +1,42 @@
-from flask import flash, render_template
+from flask import flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
+from app import db
 from app.models import EstCreeUser
+from app.models import EstMeneUser
 from app.models import Projet
 from app.models import Utilisateur
 from app.projet import projet
 from app.projet.forms import newProjectForm
 
 
-@projet.route('/projets/nouveau')
+@projet.route('/projets/nouveau', methods=['GET', 'POST'])
 @login_required
 def nouveau():
     """
     Render the dashboard template on the /dashboard route
     """
-    pageactiveP = "active-page active"
     form = newProjectForm()
     if form.validate_on_submit():
-        # db.session.add(utilisateur)
-        # db.session.commit()
+        # workflow = Workflow(nom=form.nomWorkFlow.data, description=form.descriptionWorkFlow.data)
+        nouveauProjet = Projet(nom=form.nomProjet.data, description_Projet=form.descriptionProjet.data)
+        db.session.add(nouveauProjet)
+        db.session.commit()
+
+        leprojet = Projet.query.filter_by(nom=form.nomProjet.data,
+                                          description_Projet=form.descriptionProjet.data).first_or_404()
+
+        creationProjet = EstCreeUser(id_Utilisateur=current_user.id, id_Projet=leprojet.id_Projet)
+        membreProjet = EstMeneUser(id_Utilisateur=current_user.id, id_Projet=leprojet.id_Projet)
+
+        db.session.add(creationProjet)
+        db.session.add(membreProjet)
+
+        db.session.commit()
         flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
-        return "Registration succeded!!!"
+        return redirect(url_for('projet.detailsprojet', id_Projet=leprojet.id_Projet))
     else:
         print("Formulaire invalide")
         for fieldName, errorMessages in form.errors.items():

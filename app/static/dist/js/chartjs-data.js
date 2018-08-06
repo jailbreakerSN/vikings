@@ -415,9 +415,9 @@ $( document ).ready(function() {
 		var ctx6 = document.getElementById("chart_6").getContext("2d");
 		var data6 = {
 			 labels: [
-			"lab 1",
-			"lab 2",
-			"lab 3"
+			"Mouvement de Population",
+			"Taux de Natalité",
+			"Etude de la Propagation de Ebola"
 		],
 		datasets: [
 			{

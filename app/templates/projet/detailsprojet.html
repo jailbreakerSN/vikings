@@ -13,7 +13,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="panel panel-default card-view">
             <div class="panel-heading">
                 <div class="pull-left">
@@ -53,6 +53,64 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h6 class="panel-title txt-dark">WorkFlow Process</h6>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <hr class="light-grey-hr mt-20 mb-20"/>
+                    {% for currentetape in projet.etapes %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title inline-block txt-dark">{{ currentetape.nom }}</h6>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <a href="{{url_for('etape.detailsetape') }}">
+                                        <center><i class="fa fa-step-forward"></i></center>
+                                    </a>
+                                </div>
+                            </div>
+                            <hr class="light-grey-hr mt-20 mb-20"/>
+                            <div class="emp-detail pl-15 pr-15">
+                                <div class="progress progress-lg">
+                                    <div class="progress-bar progress-bar-{{ cardclass }}" style="width: 75%;"
+                                         role="progressbar">{{ currentetape.importance }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title inline-block txt-dark">Nouvelle Etape ??</h6>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <a href="{{url_for('etape.nouvelle', id_Projet= projet.id_Projet) }}">
+                                    <center><i class="fa fa-plus fa-5x"></i></center>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <!-- /Main Content -->
 

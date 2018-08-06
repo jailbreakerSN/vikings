@@ -1,3 +1,5 @@
+import datetime
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -51,38 +53,39 @@ class Projet(db.Model):
     id_Projet = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(30))
     description_Projet = db.Column(db.Text)
-    workflow_id_workflow = db.Column(db.ForeignKey('workflow.id_Workflow'), index=True)
-
-    workflow = db.relationship('Workflow', primaryjoin='Projet.workflow_id_workflow == Workflow.id_Workflow')
+    # workflow_id_workflow = db.Column(db.ForeignKey('workflow.id_Workflow'), index=True)
+    #
+    # workflow = db.relationship('Workflow', primaryjoin='Projet.workflow_id_workflow == Workflow.id_Workflow')
     utilisateur = db.relationship('Utilisateur', secondary='est_mene_user',
                                   backref=db.backref('projets', lazy='dynamic'))
 
 
-class Workflow(db.Model):
-    __tablename__ = 'workflow'
-
-    id_Workflow = db.Column(db.Integer, primary_key=True)
-    nom = db.Column(db.String(30))
-    description = db.Column(db.Text)
-    projet_id_projet = db.Column(db.ForeignKey('projet.id_Projet'), index=True)
-
-    projet = db.relationship('Projet', primaryjoin='Workflow.projet_id_projet == Projet.id_Projet')
-
-
-# class EstMeneUser(db.Model):
-#     __table_name__ = 'est_mene_user'
-#     id_Utilisateur = db.Column(db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False, index=True)
-#     id_Projet = db.Column(db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False, index=True)
+# class Workflow(db.Model):
+#     __tablename__ = 'workflow'
 #
-#     projet = db.relationship('Projet')
-#     utilisateur = db.relationship('Utilisateur')
+#     id_Workflow = db.Column(db.Integer, primary_key=True)
+#     nom = db.Column(db.String(30))
+#     description = db.Column(db.Text)
+#     projet_id_projet = db.Column(db.ForeignKey('projet.id_Projet'), index=True)
 #
-est_mene_user = db.Table(
-    'est_mene_user', db.metadata,
-    db.Column('id_Projet', db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False),
-    db.Column('id_Utilisateur', db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False,
-              index=True)
-)
+#     projet = db.relationship('Projet', primaryjoin='Workflow.projet_id_projet == Projet.id_Projet')
+
+
+class EstMeneUser(db.Model):
+    __table_name__ = 'est_mene_user'
+    id_Utilisateur = db.Column(db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False, index=True)
+    id_Projet = db.Column(db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False, index=True)
+
+    projet = db.relationship('Projet')
+    utilisateur = db.relationship('Utilisateur')
+
+
+# est_mene_user = db.Table(
+#     'est_mene_user', db.metadata,
+#     db.Column('id_Projet', db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False),
+#     db.Column('id_Utilisateur', db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False,
+#               index=True)
+# )
 
 
 class EstCreeUser(db.Model):
@@ -90,7 +93,7 @@ class EstCreeUser(db.Model):
 
     id_Utilisateur = db.Column(db.ForeignKey('utilisateur.id'), primary_key=True, nullable=False, index=True)
     id_Projet = db.Column(db.ForeignKey('projet.id_Projet'), primary_key=True, nullable=False, index=True)
-    date_creation_est_Cree_User = db.Column(db.Date, primary_key=True, nullable=False)
+    date_creation_est_Cree_User = db.Column(db.Date, default=datetime.datetime.utcnow, primary_key=True, nullable=False)
 
     projet = db.relationship('Projet')
     utilisateur = db.relationship('Utilisateur')
@@ -107,10 +110,10 @@ class Etape(db.Model):
     valide_Etape = db.Column(db.Boolean, default=False)
     version_Etape = db.Column(db.String(30), default='1.0')
     id_Langage = db.Column(db.ForeignKey('langage.id_Langage'), index=True)
-    id_Workflow = db.Column(db.ForeignKey('workflow.id_Workflow'), index=True)
+    id_Projet = db.Column(db.ForeignKey('projet.id_Projet'), index=True)
 
     langage = db.relationship('Langage')
-    workflow = db.relationship('Workflow')
+    projet = db.relationship('Projet', backref=db.backref('etapes', lazy='dynamic'))
 
 
 class Langage(db.Model):

@@ -35,7 +35,6 @@
     {% block top_navigation %}
     {% include "site_template/top_navigation.html" %}
     {% endblock top_navigation %}
-
     <!-- /Top Menu Items -->
 
     <!-- Left Sidebar Menu -->
@@ -53,19 +52,19 @@
     <!-- Main Content -->
     {% block maincontent %}
     <div class="page-wrapper">
-        {% block content %}
+        <div class="container-fluid pt-25">
+            {% block content %}
 
-        {% endblock content %}
-        <!-- Footer -->
-        {% block footer %}
-        {% include "site_template/footer.html" %}
-        {% endblock footer %}
+            {% endblock content %}
+            <!-- Footer -->
+            {% block footer %}
+            {% include "site_template/footer.html" %}
+            {% endblock footer %}
+            <!-- /Footer -->
+        </div>
     </div>
-    <!-- /Footer -->
     {% endblock maincontent %}
     <!-- /Main Content -->
-
-
 </div>
 
 
@@ -101,6 +100,11 @@
 
 <!-- Fancy Dropdown JS -->
 <script src="{{ url_for('static', filename='dist/js/dropdown-bootstrap-extended.js') }}"></script>
+
+
+<!-- ChartJS JavaScript -->
+<script src="{{ url_for('static', filename='dist/js/chartjs-data.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/chart.js/Chart.min.js') }}"></script>
 
 <!-- Sparkline JavaScript -->
 <script src="{{ url_for('static', filename='vendors/jquery.sparkline/dist/jquery.sparkline.min.js') }}"></script>

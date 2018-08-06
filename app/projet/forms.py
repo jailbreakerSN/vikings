@@ -41,7 +41,5 @@ class newProjectForm(FlaskForm):
     """
     nomProjet = StringField('Nom du Projet', validators=[DataRequired()])
     descriptionProjet = TextAreaField('Description du Projet', validators=[DataRequired()])
-    nomWorkFlow = StringField('Nom du WorkFlow', validators=[DataRequired()])
-    descriptionWorkFlow = TextAreaField('Description du WorkFlow', validators=[DataRequired()])
 
     submit = SubmitField('Enregistrer')
